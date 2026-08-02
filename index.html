@@ -112,6 +112,15 @@
       var(--brass-dark) 39px, var(--brass-dark) 42px
     );
   }
+  @keyframes ply-scroll{
+    from{background-position:0 0;}
+    to{background-position:-42px 0;}
+  }
+  @media (prefers-reduced-motion: no-preference){
+    .ply-edge, .ply-edge.dark{
+      animation:ply-scroll 6s linear infinite;
+    }
+  }
 
   /* ---------- Header ---------- */
   header{
@@ -141,11 +150,8 @@
   .brand .mark{
     width:38px; height:38px;
     border-radius:8px;
-    background:var(--brass);
-    color:var(--bg-deep);
-    display:flex; align-items:center; justify-content:center;
-    font-weight:700;
-    font-size:1.1rem;
+    object-fit:cover;
+    flex-shrink:0;
   }
   .brand small{display:block; font-family:'Work Sans',sans-serif; font-weight:400; font-size:0.65rem; letter-spacing:0.14em; text-transform:uppercase; color:#C9B79A;}
   .nav-cta{
@@ -163,13 +169,22 @@
     background:var(--bg-deep);
     color:var(--paper);
     padding:56px 0 0;
+    position:relative;
+    background-image:
+      linear-gradient(180deg, rgba(20,12,7,0.88) 0%, rgba(20,12,7,0.78) 55%, rgba(20,12,7,0.9) 100%),
+      url('images/plywood-export-stamp.jpg');
+    background-size:cover;
+    background-position:center;
+    background-repeat:no-repeat;
   }
   .hero-grid{
     display:grid;
-    grid-template-columns:1.15fr 0.85fr;
-    gap:40px;
-    align-items:center;
-    padding-bottom:56px;
+    grid-template-columns:1fr;
+    padding-bottom:96px;
+    padding-top:40px;
+  }
+  .hero-content{
+    max-width:620px;
   }
   .eyebrow{
     display:inline-flex;
@@ -216,23 +231,11 @@
   .btn-ghost{border:1px solid rgba(248,242,229,0.35); color:var(--paper);}
   .btn-ghost:hover{border-color:var(--paper);}
 
-  .hero-figure{
-    position:relative;
-    aspect-ratio:1/1;
-    max-width:400px;
-    margin:0 auto;
-  }
-  .hero-figure img{
-    width:100%; height:100%;
-    object-fit:cover;
-    border-radius:50%;
-    border:6px solid var(--paper);
-    box-shadow:0 30px 60px -20px rgba(0,0,0,0.55);
-  }
-  .hero-figure .badge{
+  .hero-badge{
     position:absolute;
-    bottom:6%;
-    left:-6%;
+    bottom:28px;
+    right:28px;
+    justify-self:start;
     background:var(--stamp);
     color:#FBF6EC;
     font-family:'IBM Plex Mono', monospace;
@@ -243,6 +246,7 @@
     border-radius:10px;
     line-height:1.4;
     box-shadow:0 12px 24px -8px rgba(0,0,0,0.5);
+    z-index:2;
   }
 
   .trust-strip{
@@ -347,6 +351,7 @@
     grid-template-columns:1fr;
     gap:24px;
     max-width:340px;
+    margin:0 auto;
   }
   .cert-card{
     background:var(--paper);
@@ -355,6 +360,7 @@
     overflow:hidden;
   }
   .cert-card .cert-img{
+    position:relative;
     aspect-ratio:3/4;
     background:#fff;
     display:flex;
@@ -363,6 +369,26 @@
     overflow:hidden;
   }
   .cert-card .cert-img img{width:100%; height:100%; object-fit:contain;}
+  .cert-card .cert-img.zoomable{cursor:pointer;}
+  .cert-card .cert-img.zoomable::after{
+    content:"⤢";
+    position:absolute;
+    top:10px;
+    right:10px;
+    width:32px;
+    height:32px;
+    border-radius:50%;
+    background:rgba(36,24,17,0.72);
+    color:#F8F2E5;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:1rem;
+    opacity:0;
+    transition:opacity 0.2s ease;
+    pointer-events:none;
+  }
+  .cert-card .cert-img.zoomable:hover::after{opacity:1;}
   .cert-card .cert-body{padding:18px 20px;}
   .cert-card h3{font-size:1rem; font-weight:600;}
   .cert-card p{font-size:0.85rem; color:#6B5A45; margin-top:6px;}
@@ -379,11 +405,54 @@
     border-radius:10px;
   }
 
+  /* Certification image lightbox */
+  .lightbox-overlay{
+    position:fixed;
+    inset:0;
+    background:rgba(20,12,7,0.88);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:32px;
+    z-index:200;
+    opacity:0;
+    visibility:hidden;
+    transition:opacity 0.2s ease;
+  }
+  .lightbox-overlay.active{opacity:1; visibility:visible;}
+  .lightbox-overlay img{
+    max-width:90vw;
+    max-height:90vh;
+    object-fit:contain;
+    border-radius:8px;
+    box-shadow:0 30px 80px -20px rgba(0,0,0,0.6);
+  }
+  .lightbox-close{
+    position:absolute;
+    top:20px;
+    right:24px;
+    width:44px;
+    height:44px;
+    border-radius:50%;
+    background:rgba(248,242,229,0.12);
+    border:1px solid rgba(248,242,229,0.35);
+    color:#F8F2E5;
+    font-size:1.5rem;
+    line-height:1;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+  }
+  .lightbox-close:hover{background:rgba(248,242,229,0.24);}
+
   /* Products */
   .product-strip{
     display:grid;
-    grid-template-columns:repeat(3, 1fr);
+    grid-template-columns:repeat(2, 1fr);
     gap:20px;
+    max-width:760px;
+    margin:0 auto;
   }
   .product-strip figure{
     border-radius:16px;
@@ -443,16 +512,38 @@
   }
   footer img{height:34px; margin:0 auto 14px;}
 
+  @media (min-width: 861px){
+    .hero{
+      background-image:
+        linear-gradient(100deg, rgba(20,12,7,0.92) 0%, rgba(20,12,7,0.76) 45%, rgba(20,12,7,0.4) 100%),
+        url('images/plywood-export-stamp.jpg');
+    }
+  }
   @media (max-width: 860px){
-    .hero-grid{grid-template-columns:1fr; padding-bottom:40px;}
-    .hero-figure{order:-1; max-width:280px;}
+    .hero{padding-bottom:36px;}
+    .hero-grid{padding-bottom:24px; padding-top:32px;}
+    .hero-content{max-width:none;}
+    .hero-badge{position:static; display:inline-flex; margin-top:24px;}
     .hero h1{max-width:none;}
     .benefits{grid-template-columns:1fr;}
-    .product-strip{grid-template-columns:1fr 1fr;}
     .contact-grid{grid-template-columns:1fr;}
-    .datasheet-row{grid-template-columns:1.4fr 1fr; row-gap:4px;}
-    .datasheet-row .method{grid-column:1/-1; font-size:0.8rem;}
-    .datasheet-row.head .method{display:none;}
+    .datasheet-row.head{display:none;}
+    .datasheet-row{display:block; padding:20px 22px;}
+    .datasheet-row:nth-child(even){background:#F1E8D6;}
+    .datasheet-row .metric{font-size:1.02rem;}
+    .datasheet-row .method{margin-top:4px; font-size:0.82rem;}
+    .datasheet-row .result{margin-top:14px; padding-top:12px; border-top:1px dashed var(--line);}
+    .datasheet-row .result::before{
+      content:"Result";
+      display:block;
+      font-family:'IBM Plex Mono', monospace;
+      font-weight:600;
+      font-size:0.66rem;
+      letter-spacing:0.1em;
+      text-transform:uppercase;
+      color:var(--brass-dark);
+      margin-bottom:4px;
+    }
     section{padding:56px 0;}
   }
   @media (max-width: 520px){
@@ -461,6 +552,16 @@
     .nav-cta{padding:9px 14px; font-size:0.82rem;}
     .brand span.name{display:none;}
   }
+  /* Common phone widths (iPhone SE/12-15 Pro, common Android): keep hero CTAs on one line */
+  @media (max-width: 480px){
+    .hero-ctas{gap:10px; flex-wrap:nowrap;}
+    .btn{padding:12px 16px; font-size:0.84rem; gap:6px;}
+  }
+  /* Below the common phone range: stack CTAs intentionally instead of an accidental wrap */
+  @media (max-width: 359px){
+    .hero-ctas{flex-wrap:wrap; flex-direction:column; align-items:stretch; gap:12px;}
+    .btn{padding:14px 20px; font-size:0.92rem; justify-content:center;}
+  }
 </style>
 </head>
 <body>
@@ -468,7 +569,7 @@
 <header>
   <div class="nav">
     <a href="#top" class="brand">
-      <span class="mark">W</span>
+      <img class="mark" src="images/logo-mark.png" alt="Wayamba Ply Industries logo mark">
       <span class="name">Wayamba Ply Industries<br><small>Private Limited</small></span>
     </a>
     <a class="nav-cta" href="tel:+94777663920">Call +94 777 66 39 20</a>
@@ -478,19 +579,16 @@
 <main id="top">
   <section class="hero" style="padding-top:56px;">
     <div class="wrap hero-grid">
-      <div>
+      <div class="hero-content">
         <span class="eyebrow">Manufactured in Pothuhera, Sri Lanka</span>
         <h1>Commercial grade W.B.P quality plywood, tested to hold.</h1>
-        <p class="lede">High density plywood with superior bonding — laboratory tested by the Industrial Technology Institute for density, water resistance and glue line strength. Sheets, doors and building materials, direct from our Handugala factory.</p>
+        <p class="lede">High density plywood with superior bonding - laboratory tested by the Industrial Technology Institute for density, water resistance and glue line strength. Sheets, doors and building materials, direct from our Handugala factory.</p>
         <div class="hero-ctas">
           <a class="btn btn-primary" href="https://wa.me/94777663920" target="_blank" rel="noopener">WhatsApp Asanka</a>
           <a class="btn btn-ghost" href="#contact">Get a quote</a>
         </div>
       </div>
-      <div class="hero-figure">
-        <img src="images/plywood-export-stamp.jpg" alt="Export quality certified W.B.P plywood sheet edge, Wayamba Ply Industries">
-        <div class="badge">ITI&nbsp;Tested<br>Report&nbsp;SS&nbsp;2510125</div>
-      </div>
+      <div class="hero-badge">ITI&nbsp;Tested<br>Report&nbsp;SS&nbsp;2510125</div>
     </div>
   </section>
   <div class="ply-edge dark" role="presentation"></div>
@@ -552,7 +650,7 @@
           <div class="method">ASTM D 1037</div>
           <div class="result">2.50 MPa</div>
         </div>
-        <div class="datasheet-foot">Tested by the Industrial Technology Institute, Materials Laboratory. Tensile strength exceeded the 25 MPa capacity of the test machine. Glue line failure occurred through the wood itself, with no delamination — the bond outlasts the timber.</div>
+        <div class="datasheet-foot">Tested by the Industrial Technology Institute, Materials Laboratory. Tensile strength exceeded the 25 MPa capacity of the test machine. Glue line failure occurred through the wood itself, with no delamination - the bond outlasts the timber.</div>
       </div>
     </div>
   </section>
@@ -580,7 +678,7 @@
         <div class="benefit-card">
           <span class="num mono">LAB VERIFIED</span>
           <h3>Independently tested</h3>
-          <p>Every claim on this page is backed by ITI test report SS 2510125 — not just marketing copy.</p>
+          <p>Every claim on this page is backed by ITI test report SS 2510125 - not just marketing copy.</p>
         </div>
       </div>
     </div>
@@ -592,7 +690,6 @@
       <div class="product-strip">
         <figure><img src="images/plywood-edge-1.jpg" alt="Cross-section edge of W.B.P commercial grade plywood sheet"></figure>
         <figure><img src="images/plywood-edge-2.jpg" alt="Plywood veneer layers showing bonding quality"></figure>
-        <figure><img src="images/plywood-edge-3.jpg" alt="Stacked plywood sheets, Wayamba Ply Industries factory"></figure>
       </div>
     </div>
   </section>
@@ -681,6 +778,45 @@
   </div>
 </footer>
 
-<script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+<script>
+document.getElementById('year').textContent = new Date().getFullYear();
+
+(function(){
+  var certImages = document.querySelectorAll('.cert-img img');
+  if(!certImages.length) return;
+
+  certImages.forEach(function(img){ img.closest('.cert-img').classList.add('zoomable'); });
+
+  var overlay = document.createElement('div');
+  overlay.className = 'lightbox-overlay';
+  overlay.innerHTML = '<button type="button" class="lightbox-close" aria-label="Close">&times;</button><img alt="">';
+  document.body.appendChild(overlay);
+  var overlayImg = overlay.querySelector('img');
+  var closeBtn = overlay.querySelector('.lightbox-close');
+
+  function openLightbox(img){
+    overlayImg.src = img.currentSrc || img.src;
+    overlayImg.alt = img.alt;
+    overlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeLightbox(){
+    overlay.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  certImages.forEach(function(img){
+    img.addEventListener('click', function(){ openLightbox(img); });
+  });
+
+  overlay.addEventListener('click', function(e){
+    if(e.target === overlay) closeLightbox();
+  });
+  closeBtn.addEventListener('click', closeLightbox);
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape' && overlay.classList.contains('active')) closeLightbox();
+  });
+})();
+</script>
 </body>
 </html>
