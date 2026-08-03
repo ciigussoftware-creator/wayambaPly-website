@@ -11,6 +11,10 @@
     content="plywood Sri Lanka, plywood Kurunegala, plywood Pothuhera, W.B.P plywood, commercial grade plywood, plywood manufacturer, high density plywood, plywood doors Sri Lanka">
   <link rel="canonical" href="https://wayambaply.lk/">
 
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="images/logo-mark.png">
+  <link rel="apple-touch-icon" href="images/logo-mark.png">
+
   <!-- Open Graph -->
   <meta property="og:type" content="business.business">
   <meta property="og:title" content="Wayamba Ply Industries | W.B.P Commercial Plywood Manufacturer">
@@ -24,6 +28,7 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap"
     rel="stylesheet">
+  <link rel="preload" as="image" href="images/plywood-export-stamp.jpg" fetchpriority="high">
 
   <!-- Local Business structured data for SEO -->
   <script type="application/ld+json">
@@ -67,6 +72,8 @@
       --pine: #425B44;
       --stamp: #9A3A2C;
       --line: rgba(36, 24, 17, 0.14);
+      --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+      --dur: 200ms;
     }
 
     * {
@@ -134,6 +141,24 @@
           var(--brass) 18px, var(--brass) 21px,
           #55381F 21px, #55381F 39px,
           var(--brass-dark) 39px, var(--brass-dark) 42px);
+    }
+
+    @keyframes ply-scroll {
+      from {
+        background-position: 0 0;
+      }
+
+      to {
+        background-position: -42px 0;
+      }
+    }
+
+    @media (prefers-reduced-motion: no-preference) {
+
+      .ply-edge,
+      .ply-edge.dark {
+        animation: ply-scroll 6s linear infinite;
+      }
     }
 
     /* ---------- Header ---------- */
@@ -224,13 +249,8 @@
       width: 38px;
       height: 38px;
       border-radius: 8px;
-      background: var(--brass);
-      color: var(--bg-deep);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 700;
-      font-size: 1.1rem;
+      object-fit: cover;
+      flex-shrink: 0;
     }
 
     .brand small {
@@ -241,6 +261,30 @@
       letter-spacing: 0.14em;
       text-transform: uppercase;
       color: #C9B79A;
+    }
+
+    .brand .name {
+      position: relative;
+      display: inline-block;
+    }
+
+    .brand .name::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: -3px;
+      height: 1px;
+      background: var(--brass);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform var(--dur) var(--ease-out);
+    }
+
+    @media (hover: hover) {
+      .brand:hover .name::after {
+        transform: scaleX(1);
+      }
     }
 
     .nav-cta {
@@ -258,14 +302,139 @@
       background: var(--bg-deep);
       color: var(--paper);
       padding: 56px 0 0;
+      position: relative;
+      background-image:
+        linear-gradient(180deg, rgba(20, 12, 7, 0.88) 0%, rgba(20, 12, 7, 0.78) 55%, rgba(20, 12, 7, 0.9) 100%),
+        url('images/plywood-export-stamp.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+
+    @media (min-width: 961px) {
+      .hero {
+        background-image:
+          linear-gradient(100deg, rgba(20, 12, 7, 0.92) 0%, rgba(20, 12, 7, 0.76) 45%, rgba(20, 12, 7, 0.4) 100%),
+          url('images/plywood-export-stamp.jpg');
+      }
     }
 
     .hero-grid {
       display: grid;
-      grid-template-columns: 1.15fr 0.85fr;
-      gap: 40px;
+      grid-template-columns: 1fr;
+      padding-top: 40px;
+      padding-bottom: 96px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-content {
+      max-width: 620px;
+    }
+
+    /* Faint decorative icons, purely ambient - never competes with the photo or text */
+    .hero-deco {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.07;
+    }
+
+    .hero-deco svg {
+      display: block;
+      stroke: var(--paper);
+      fill: none;
+    }
+
+    .hero-deco span {
+      position: absolute;
+      display: block;
+    }
+
+    .hero-deco .deco-1 {
+      top: -30px;
+      right: -20px;
+      width: clamp(180px, 20vw, 260px);
+      transform: rotate(6deg);
+    }
+
+    .hero-deco .deco-2 {
+      bottom: -10px;
+      right: 20%;
+      width: clamp(140px, 16vw, 220px);
+      transform: rotate(-8deg);
+    }
+
+    .hero-deco .deco-3 {
+      top: 36%;
+      right: 6%;
+      width: clamp(100px, 12vw, 170px);
+      transform: rotate(10deg);
+    }
+
+    /* Hero stat bar */
+    .hero-stats {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: stretch;
+      gap: 20px 0;
+      margin-top: 28px;
+      font-family: 'IBM Plex Mono', monospace;
+    }
+
+    .hero-stat {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      padding: 0 22px;
+      border-right: 1px solid rgba(248, 242, 229, 0.16);
+    }
+
+    .hero-stat:first-child {
+      padding-left: 0;
+    }
+
+    .hero-stat:last-child {
+      border-right: none;
+    }
+
+    .hero-stat-value {
+      display: flex;
       align-items: center;
-      padding-bottom: 56px;
+      gap: 6px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--brass);
+      white-space: nowrap;
+    }
+
+    .hero-stat-value .unit {
+      font-size: 0.7rem;
+      font-weight: 500;
+      color: #D8CBB5;
+    }
+
+    .hero-stat-check {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+      border-radius: 50%;
+      background: var(--brass);
+      color: var(--bg-deep);
+      font-size: 0.65rem;
+      font-weight: 700;
+    }
+
+    .hero-stat-label {
+      font-size: 0.66rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #B8A78C;
     }
 
     .eyebrow {
@@ -287,6 +456,24 @@
       font-size: clamp(2.1rem, 4.2vw, 3.3rem);
       color: #FBF6EC;
       max-width: 12ch;
+    }
+
+    .rotate-word {
+      display: inline-block;
+      color: var(--brass);
+      text-align: left;
+      transition: opacity var(--dur) var(--ease-out), transform var(--dur) var(--ease-out);
+    }
+
+    .rotate-word.is-swapping {
+      opacity: 0;
+      transform: translateY(6px);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .rotate-word {
+        transition: none;
+      }
     }
 
     .hero p.lede {
@@ -311,6 +498,7 @@
       display: inline-flex;
       align-items: center;
       gap: 8px;
+      transition: transform var(--dur) var(--ease-out), box-shadow var(--dur) var(--ease-out), background var(--dur) var(--ease-out), border-color var(--dur) var(--ease-out), color var(--dur) var(--ease-out);
     }
 
     .btn-primary {
@@ -318,49 +506,24 @@
       color: var(--bg-deep);
     }
 
-    .btn-primary:hover {
-      background: #BE8C42;
-    }
-
     .btn-ghost {
+      background: transparent;
       border: 1px solid rgba(248, 242, 229, 0.35);
       color: var(--paper);
     }
 
-    .btn-ghost:hover {
-      border-color: var(--paper);
-    }
+    @media (hover: hover) {
+      .btn-primary:hover {
+        background: #BE8C42;
+        transform: translateY(-2px);
+        box-shadow: 0 10px 22px -8px rgba(0, 0, 0, 0.4);
+      }
 
-    .hero-figure {
-      position: relative;
-      aspect-ratio: 1/1;
-      max-width: 400px;
-      margin: 0 auto;
-    }
-
-    .hero-figure img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      border-radius: 50%;
-      border: 6px solid var(--paper);
-      box-shadow: 0 30px 60px -20px rgba(0, 0, 0, 0.55);
-    }
-
-    .hero-figure .badge {
-      position: absolute;
-      bottom: 6%;
-      left: -6%;
-      background: var(--stamp);
-      color: #FBF6EC;
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 0.68rem;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      padding: 10px 14px;
-      border-radius: 10px;
-      line-height: 1.4;
-      box-shadow: 0 12px 24px -8px rgba(0, 0, 0, 0.5);
+      .btn-ghost:hover {
+        background: var(--brass);
+        border-color: var(--brass);
+        color: var(--bg-deep);
+      }
     }
 
     .trust-strip {
@@ -392,6 +555,14 @@
       border-radius: 50%;
       background: var(--brass);
       display: inline-block;
+      transition: transform var(--dur) var(--ease-out), background var(--dur) var(--ease-out);
+    }
+
+    @media (hover: hover) {
+      .trust-strip span:hover .dot {
+        transform: scale(1.6);
+        background: #D9B57E;
+      }
     }
 
     /* ---------- Sections ---------- */
@@ -517,6 +688,7 @@
       grid-template-columns: 1fr;
       gap: 24px;
       max-width: 340px;
+      margin: 0 auto;
     }
 
     .cert-card {
@@ -527,6 +699,7 @@
     }
 
     .cert-card .cert-img {
+      position: relative;
       aspect-ratio: 3/4;
       background: #fff;
       display: flex;
@@ -539,6 +712,54 @@
       width: 100%;
       height: 100%;
       object-fit: contain;
+      transition: transform var(--dur) var(--ease-out);
+    }
+
+    .cert-card .cert-img.zoomable {
+      cursor: pointer;
+    }
+
+    .cert-card .cert-img.zoomable::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: rgba(36, 24, 17, 0.28);
+      opacity: 0;
+      transition: opacity var(--dur) var(--ease-out);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .cert-card .cert-img.zoomable::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 44px;
+      height: 44px;
+      margin: -22px 0 0 -22px;
+      border-radius: 50%;
+      background: rgba(36, 24, 17, 0.8) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23F8F2E5' stroke-width='2' stroke-linecap='round'%3E%3Ccircle cx='10' cy='10' r='6'/%3E%3Cline x1='15' y1='15' x2='20' y2='20'/%3E%3C/svg%3E") center/20px 20px no-repeat;
+      opacity: 0;
+      transform: scale(0.85);
+      transition: opacity var(--dur) var(--ease-out), transform var(--dur) var(--ease-out);
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    @media (hover: hover) {
+      .cert-card .cert-img.zoomable:hover img {
+        transform: scale(1.05);
+      }
+
+      .cert-card .cert-img.zoomable:hover::before {
+        opacity: 1;
+      }
+
+      .cert-card .cert-img.zoomable:hover::after {
+        opacity: 1;
+        transform: scale(1);
+      }
     }
 
     .cert-card .cert-body {
@@ -570,11 +791,63 @@
       border-radius: 10px;
     }
 
+    /* Certification image lightbox */
+    .lightbox-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(20, 12, 7, 0.88);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 32px;
+      z-index: 200;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity var(--dur) var(--ease-out);
+    }
+
+    .lightbox-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .lightbox-overlay img {
+      max-width: 90vw;
+      max-height: 90vh;
+      object-fit: contain;
+      border-radius: 8px;
+      box-shadow: 0 30px 80px -20px rgba(0, 0, 0, 0.6);
+    }
+
+    .lightbox-close {
+      position: absolute;
+      top: 20px;
+      right: 24px;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: rgba(248, 242, 229, 0.12);
+      border: 1px solid rgba(248, 242, 229, 0.35);
+      color: #F8F2E5;
+      font-size: 1.5rem;
+      line-height: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+
+    .lightbox-close:hover {
+      background: rgba(248, 242, 229, 0.24);
+    }
+
     /* Products */
     .product-strip {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(2, 1fr);
       gap: 20px;
+      max-width: 760px;
+      margin: 0 auto;
     }
 
     .product-strip figure {
@@ -587,6 +860,13 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
+      transition: transform var(--dur) var(--ease-out);
+    }
+
+    @media (hover: hover) {
+      .product-strip figure:hover img {
+        transform: scale(1.05);
+      }
     }
 
     /* FAQ */
@@ -751,44 +1031,78 @@
     }
 
     @media (max-width: 960px) {
-      .hero-grid {
-        grid-template-columns: 1fr;
-        padding-bottom: 40px;
+      .hero {
+        padding-bottom: 36px;
       }
 
-      .hero-figure {
-        order: -1;
-        max-width: 280px;
+      .hero-grid {
+        padding-top: 32px;
+        padding-bottom: 24px;
+      }
+
+      .hero-content {
+        max-width: none;
       }
 
       .hero h1 {
         max-width: none;
       }
 
-      .benefits {
-        grid-template-columns: 1fr;
+      .hero-stats {
+        gap: 18px 28px;
       }
 
-      .product-strip {
-        grid-template-columns: 1fr 1fr;
+      .hero-stat {
+        border-right: none;
+        padding: 0;
+      }
+
+      .benefits {
+        grid-template-columns: 1fr;
       }
 
       .contact-grid {
         grid-template-columns: 1fr;
       }
 
+      .datasheet-row.head {
+        display: none;
+      }
+
       .datasheet-row {
-        grid-template-columns: 1.4fr 1fr;
-        row-gap: 4px;
+        display: block;
+        padding: 20px 22px;
+      }
+
+      .datasheet-row:nth-child(even) {
+        background: #F1E8D6;
+      }
+
+      .datasheet-row .metric {
+        font-size: 1.02rem;
       }
 
       .datasheet-row .method {
-        grid-column: 1/-1;
-        font-size: 0.8rem;
+        margin-top: 4px;
+        font-size: 0.82rem;
       }
 
-      .datasheet-row.head .method {
-        display: none;
+      .datasheet-row .result {
+        margin-top: 14px;
+        padding-top: 12px;
+        border-top: 1px dashed var(--line);
+      }
+
+      .datasheet-row .result::before {
+        content: "Result";
+        display: block;
+        font-family: 'IBM Plex Mono', monospace;
+        font-weight: 600;
+        font-size: 0.66rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--brass-dark);
+        margin-bottom: 4px;
       }
 
       section {
@@ -893,6 +1207,36 @@
         display: none;
       }
     }
+
+    /* Common phone widths (iPhone SE/12-15 Pro, common Android): keep hero CTAs on one line */
+    @media (max-width: 480px) {
+      .hero-ctas {
+        gap: 10px;
+        flex-wrap: nowrap;
+      }
+
+      .btn {
+        padding: 12px 16px;
+        font-size: 0.84rem;
+        gap: 6px;
+      }
+    }
+
+    /* Below the common phone range: stack CTAs intentionally instead of an accidental wrap */
+    @media (max-width: 359px) {
+      .hero-ctas {
+        flex-wrap: wrap;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 12px;
+      }
+
+      .btn {
+        padding: 14px 20px;
+        font-size: 0.92rem;
+        justify-content: center;
+      }
+    }
   </style>
 </head>
 
@@ -903,7 +1247,7 @@
 
       <!-- Company logo and name -->
       <a href="#top" class="brand">
-        <span class="mark">W</span>
+        <img class="mark" src="images/logo-mark.png" alt="Wayamba Ply Industries logo mark">
 
         <span class="name">
           Wayamba Ply Industries<br>
@@ -938,25 +1282,54 @@
 
   <main id="top">
     <section class="hero" style="padding-top:56px;">
+      <div class="hero-deco" aria-hidden="true">
+        <span class="deco-1">
+          <svg viewBox="0 0 100 100" stroke-width="1.5">
+            <circle cx="50" cy="50" r="46" />
+            <path d="M32 52 L45 65 L70 36" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </span>
+        <span class="deco-2">
+          <svg viewBox="0 0 100 100" stroke-width="1.5">
+            <circle cx="50" cy="50" r="46" stroke-dasharray="4 5" />
+            <circle cx="50" cy="50" r="34" />
+            <path d="M34 50 L45 61 L67 39" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </span>
+        <span class="deco-3">
+          <svg viewBox="0 0 100 100" stroke-width="1.5">
+            <circle cx="50" cy="50" r="46" />
+            <path d="M32 52 L45 65 L70 36" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </span>
+      </div>
       <div class="wrap hero-grid">
-        <div>
+        <div class="hero-content">
           <span class="eyebrow">Manufactured in Pothuhera, Sri Lanka</span>
-          <h1>W.B.P Commercial Plywood Manufacturer in Sri Lanka</h1>
+          <h1><span class="rotate-word" id="rotateWord">Tested</span> Quality W.B.P Commercial Plywood Manufacturer in Sri Lanka</h1>
           <p class="lede">Wayamba Ply manufactures high-density W.B.P commercial plywood sheets,
             plywood boards and plywood doors at our factory in Handugala, Pothuhera,
             Kurunegala. Our ITI-tested plywood products are supplied to customers
             across Sri Lanka.</p>
+          <div class="hero-stats">
+            <div class="hero-stat">
+              <span class="hero-stat-value">633<span class="unit">&nbsp;kg/m³</span></span>
+              <span class="hero-stat-label">Density</span>
+            </div>
+            <div class="hero-stat">
+              <span class="hero-stat-value">25.47%</span>
+              <span class="hero-stat-label">Water Absorption</span>
+            </div>
+            <div class="hero-stat">
+              <span class="hero-stat-value"><span class="hero-stat-check">&#10003;</span>ITI Certified</span>
+              <span class="hero-stat-label">Report SS 2510125</span>
+            </div>
+          </div>
           <div class="hero-ctas">
             <a class="btn btn-primary" href="https://wa.me/94777663920" target="_blank" rel="noopener">WhatsApp
               Asanka</a>
             <a class="btn btn-ghost" href="#contact">Get a quote</a>
           </div>
-        </div>
-        <div class="hero-figure">
-          <img src="images/plywood-export-stamp.jpg"
-            alt="Wayamba Ply W.B.P commercial plywood manufactured in Sri Lanka" width="288" height="384"
-            fetchpriority="high" decoding="async">
-          <div class="badge">ITI&nbsp;Tested<br>Report&nbsp;SS&nbsp;2510125</div>
         </div>
       </div>
     </section>
@@ -1078,8 +1451,6 @@
               height="512" loading="lazy" decoding="async">
           </figure>
           <figure><img src="images/plywood-edge-2.jpg" alt="Plywood veneer layers showing bonding quality"></figure>
-          <figure><img src="images/plywood-edge-3.jpg" alt="Stacked plywood sheets, Wayamba Ply Industries factory">
-          </figure>
         </div>
       </div>
     </section>
@@ -1299,7 +1670,90 @@
     });
   </script>
 
-  <!--test commit2 -->
+  <script>
+    (function () {
+      var certImages = document.querySelectorAll('.cert-img img');
+      if (!certImages.length) return;
+
+      certImages.forEach(function (img) { img.closest('.cert-img').classList.add('zoomable'); });
+
+      var overlay = document.createElement('div');
+      overlay.className = 'lightbox-overlay';
+      overlay.innerHTML = '<button type="button" class="lightbox-close" aria-label="Close">&times;</button><img alt="">';
+      document.body.appendChild(overlay);
+      var overlayImg = overlay.querySelector('img');
+      var closeBtn = overlay.querySelector('.lightbox-close');
+
+      function openLightbox(img) {
+        overlayImg.src = img.currentSrc || img.src;
+        overlayImg.alt = img.alt;
+        overlay.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      }
+      function closeLightbox() {
+        overlay.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+
+      certImages.forEach(function (img) {
+        img.addEventListener('click', function () { openLightbox(img); });
+      });
+
+      overlay.addEventListener('click', function (e) {
+        if (e.target === overlay) closeLightbox();
+      });
+      closeBtn.addEventListener('click', closeLightbox);
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && overlay.classList.contains('active')) closeLightbox();
+      });
+    })();
+  </script>
+
+  <script>
+    (function () {
+      var el = document.getElementById('rotateWord');
+      if (!el) return;
+      var words = ['Tested', 'Certified', 'Verified', 'Guaranteed'];
+      var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      function lockWidth() {
+        var probe = el.cloneNode(false);
+        probe.style.position = 'absolute';
+        probe.style.visibility = 'hidden';
+        probe.style.whiteSpace = 'nowrap';
+        probe.style.minWidth = '0';
+        document.body.appendChild(probe);
+        var max = 0;
+        words.forEach(function (w) {
+          probe.textContent = w;
+          max = Math.max(max, probe.offsetWidth);
+        });
+        document.body.removeChild(probe);
+        el.style.minWidth = max + 'px';
+      }
+
+      function start() {
+        lockWidth();
+        if (reduced) return;
+        var i = 0;
+        setInterval(function () {
+          el.classList.add('is-swapping');
+          setTimeout(function () {
+            i = (i + 1) % words.length;
+            el.textContent = words[i];
+            el.classList.remove('is-swapping');
+          }, 300);
+        }, 2300);
+      }
+
+      if (document.fonts && document.fonts.ready) {
+        document.fonts.ready.then(start);
+      } else {
+        start();
+      }
+      window.addEventListener('resize', lockWidth);
+    })();
+  </script>
 </body>
 
 </html>
