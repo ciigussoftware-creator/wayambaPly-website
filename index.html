@@ -383,7 +383,7 @@
     .hero {
       background: var(--bg-deep);
       color: var(--paper);
-      padding: 56px 0 0;
+      padding: 28px 0 0;
       position: relative;
       background-image:
         linear-gradient(180deg, rgba(20, 12, 7, 0.88) 0%, rgba(20, 12, 7, 0.78) 55%, rgba(20, 12, 7, 0.9) 100%),
@@ -404,7 +404,7 @@
     .hero-grid {
       display: grid;
       grid-template-columns: 1fr;
-      padding-top: 40px;
+      padding-top: 24px;
       padding-bottom: 96px;
       position: relative;
       z-index: 1;
@@ -573,10 +573,10 @@
     }
 
     .btn {
-      padding: 14px 24px;
+      padding: 18px 40px;
       border-radius: 100px;
       font-weight: 600;
-      font-size: 0.95rem;
+      font-size: 1.1rem;
       display: inline-flex;
       align-items: center;
       gap: 8px;
@@ -650,6 +650,10 @@
     /* ---------- Sections ---------- */
     section {
       padding: 80px 0;
+      scroll-margin-top: 90px;
+    }
+
+    #top {
       scroll-margin-top: 90px;
     }
 
@@ -1164,7 +1168,7 @@
       }
 
       .hero-grid {
-        padding-top: 32px;
+        padding-top: 20px;
         padding-bottom: 24px;
       }
 
@@ -1336,33 +1340,11 @@
       }
     }
 
-    /* Common phone widths (iPhone SE/12-15 Pro, common Android): keep hero CTAs on one line */
+    /* Scale the single hero CTA down slightly on narrow phones */
     @media (max-width: 480px) {
-      .hero-ctas {
-        gap: 10px;
-        flex-wrap: nowrap;
-      }
-
       .btn {
-        padding: 12px 16px;
-        font-size: 0.84rem;
-        gap: 6px;
-      }
-    }
-
-    /* Below the common phone range: stack CTAs intentionally instead of an accidental wrap */
-    @media (max-width: 359px) {
-      .hero-ctas {
-        flex-wrap: wrap;
-        flex-direction: column;
-        align-items: stretch;
-        gap: 12px;
-      }
-
-      .btn {
-        padding: 14px 20px;
-        font-size: 0.92rem;
-        justify-content: center;
+        padding: 15px 28px;
+        font-size: 1rem;
       }
     }
   </style>
@@ -1433,7 +1415,7 @@
   </header>
 
   <main id="top">
-    <section class="hero" style="padding-top:56px;">
+    <section class="hero">
       <div class="hero-deco" aria-hidden="true">
         <span class="deco-1">
           <svg viewBox="0 0 100 100" stroke-width="1.5">
@@ -1479,8 +1461,6 @@
             </div>
           </div>
           <div class="hero-ctas">
-            <a class="btn btn-primary" href="https://wa.me/94707007333" target="_blank" rel="noopener">WhatsApp
-              Ravindu</a>
             <a class="btn btn-ghost" href="#contact">Get a quote</a>
           </div>
         </div>
@@ -1631,6 +1611,8 @@
         </div>
       </div>
     </section>
+
+    <div class="ply-edge" role="presentation"></div>
 
     <!-- FREQUENTLY ASKED QUESTIONS -->
 
