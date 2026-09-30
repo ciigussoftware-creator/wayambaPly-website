@@ -1,6 +1,6 @@
 # Wayamba Ply Industries Website
 
-Official website for **Wayamba Ply Industries (Pvt) Ltd**, a Sri Lankan manufacturer and supplier of ITI-tested W.B.P. commercial plywood. The website presents the companyâ€™s plywood products, verified laboratory test results, certifications and contact information in a modern, responsive single-page design.
+Official website for **Wayamba Ply Industries (Pvt) Ltd**, a Sri Lankan manufacturer and supplier of ITI-tested W.B.P. commercial plywood. The website presents the company’s plywood products, verified laboratory test results, certifications and contact information in a modern, responsive single-page design.
 
 ## Live Website
 
@@ -13,10 +13,12 @@ Official website for **Wayamba Ply Industries (Pvt) Ltd**, a Sri Lankan manufact
 - Product information for W.B.P. commercial plywood sheets and boards
 - ITI laboratory test results and certification details
 - Product and certification image gallery
-- Direct telephone, WhatsApp and email contact links
+- Factory section with a photo of the production floor
+- Frequently asked questions
+- Direct telephone and email contact links
 - Embedded Google Maps location for the factory
 - Sticky navigation and smooth section scrolling
-- Optimized image loading for improved website performance
+- Optimized image loading: WebP images with JPEG/PNG fallbacks, a phone-sized hero photo and lazy loading
 - Dynamic copyright year in the footer
 - Custom favicon and Apple touch icon support
 - Google Analytics 4 integration for visitor and engagement tracking
@@ -27,7 +29,7 @@ Official website for **Wayamba Ply Industries (Pvt) Ltd**, a Sri Lankan manufact
 - Canonical URL configuration
 - Open Graph metadata for social media sharing
 - X/Twitter card metadata
-- `LocalBusiness` structured data using JSON-LD
+- `LocalBusiness` and `FAQPage` structured data using JSON-LD
 - Descriptive image alternative text
 - Semantic heading and page structure
 - `robots.txt` for search-engine crawler guidance
@@ -49,20 +51,23 @@ Official website for **Wayamba Ply Industries (Pvt) Ltd**, a Sri Lankan manufact
 - Hero and quotation call-to-action
 - Product specifications and test results
 - W.B.P. plywood benefits
-- Product showcase
+- Product showcase and available thicknesses
+- Key test results at a glance
 - Certifications
+- Inside our factory
+- Frequently asked questions
 - Contact details and factory location
 
 ## Project Structure
 
 ```text
 wayambaPly-website/
-â”œâ”€â”€ images/          # Logos, favicons, product photos and certification images
-â”œâ”€â”€ index.html       # Website structure, styling and JavaScript
-â”œâ”€â”€ robots.txt       # Search-engine crawling instructions
-â”œâ”€â”€ sitemap.xml      # Sitemap for search engines
-â”œâ”€â”€ CNAME            # GitHub Pages custom-domain configuration
-â””â”€â”€ README.md        # Project documentation
+├── images/          # Logos, favicons, product photos and certification images
+├── index.html       # Website structure, styling and JavaScript
+├── robots.txt       # Search-engine crawling instructions
+├── sitemap.xml      # Sitemap for search engines
+├── CNAME            # GitHub Pages custom-domain configuration
+└── README.md        # Project documentation
 ```
 
 ## Run Locally
